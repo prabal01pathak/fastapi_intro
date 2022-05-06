@@ -1,0 +1,4 @@
+*py@neomake*
+*.pyc
+__pycache__/
+.env
