@@ -5,13 +5,13 @@ import asyncio
 import time
 
 
-async def hello_world(first, work="new", *args, **kwargs):
+async def hello_world(first, work="", *args, **kwargs):
     """
     This is a coroutine function
     """
     name = kwargs.get('name', 'World')
     while True:
-        print(f"Hello {first} {name} {work}")
+        print(f"Hello {name} {first} {work}")
         await asyncio.sleep(0.00001)
 
 async def other_func():

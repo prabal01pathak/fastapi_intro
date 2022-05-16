@@ -8,6 +8,8 @@ authors = ["prabal <prabal01pathak@gmail.com>"]
 python = "^3.9"
 fastapi = "^0.76.0"
 uvicorn = {extras = ["standard"], version = "^0.17.6"}
+pydantic = {extras = ["email"], version = "^1.9.0"}
+SQLAlchemy = "^1.4.36"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
