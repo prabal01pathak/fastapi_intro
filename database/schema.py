@@ -1,35 +1,80 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+""" 
+Description: pydantic schema for models
+Author: Prabal Pathak
+"""
 
-from typing import List, Optional, Dict
-from datetime import datetime
+from typing import Optional
 from pydantic import BaseModel, EmailStr
 
-class User(BaseModel):
+
+class UserCreate(BaseModel):
+    """Save user details in the database
+
+    Args:
+        BaseModel (class): pydantic basemodel
+    """
+
     username: str
     email: EmailStr
-    password: int
+    password: str
     is_admin: bool
     is_active: bool
-    created_at: datetime = datetime.now()
-    updated_at: datetime = datetime.now()
-    updated_by : Optional[str] = None
+    updated_by: Optional[str] = None
     additional_info: Optional[str] = None
 
     class Config:
+        """configuration class"""
+
         orm_mode = True
 
 
-if __name__ == '__main__':
+class User(BaseModel):
+    """get user without password
+
+    Args:
+        BaseModel (class) : _description_
+    """
+
+    id: Optional[int]
+    username: str
+    is_active: bool
+    is_admin: bool
+    updated_by: Optional[str] = None
+    additional_info: Optional[str] = None
+
+    class Config:
+        """configuration class"""
+
+        orm_mode = True
+
+
+class UserInDB(User):
+    """return the password with other user details
+
+    Args:
+        User (class): user details
+    """
+
+    password: str
+
+    class Config:
+        """configuration class"""
+
+        orm_mode = True
+
+
+if __name__ == "__main__":
     user = {
-        'id': 1,
-        'username': 'John Doe',
-        'email': 'prabal@gmail.com',
-        'password': '232',
-        'is_admin': True,
-        'is_active': True,
-        'additional_info': "age: 23"
+        "id": 1,
+        "username": "John Doe",
+        "email": "prabal@gmail.com",
+        "password": "232",
+        "is_admin": True,
+        "is_active": True,
+        "additional_info": "age: 23",
     }
-    user_model = User(**user)
+    user_model = UserCreate(**user)
     print(user_model.dict())
     print(user_model)
