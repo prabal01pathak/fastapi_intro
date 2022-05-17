@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-""" 
+"""
 descriptin: create, read, update, delete operations utils -> database
 Author: Prabal Pathak
 """
