@@ -1,18 +1,22 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""
+description: Models for the user app.
+AUTHOR: prabal pathak
+"""
 
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
+__all__ = ['User']
+
 from datetime import datetime
-
-url = 'sqlite:///database.db'
-engine = create_engine(url, echo=True)
-Session = sessionmaker(bind=engine)
-Base = declarative_base()
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
+from .database import Base
 
 class UserSchema(Base):
+    """
+    class: UserSchema 
+    Functions: __init__, __repr__
+    description: constructor, return string representation of the object
+    """
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     username = Column(String)
@@ -31,6 +35,12 @@ class UserSchema(Base):
             created_at, updated_at, updated_by, 
             additional_info
     ):
+        """
+        Function: __init__
+        Args: (username, password, email, 
+        is_admin, is_active, created_at, updated_at, updated_by, additional_info)
+        description: constructor
+        """
         self.username = username
         self.password = password
         self.email = email
@@ -40,5 +50,10 @@ class UserSchema(Base):
         self.updated_at = updated_at
         self.updated_by = updated_by
 
-    def __repr__(self):
+    def __repr__(self)->str:
+        """
+        Function: __repr__
+        Args: self
+        description: return string representation of the object
+        """
         return "<User('%s','%s','%s')>" % (self.username, self.password, self.email)
