@@ -11,15 +11,25 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 
+def db():
+    session = Session()
+    try:
+        yield session
+    finally:
+        session.close()
+
+
 @app.get("/")
 async def root():
     """ root endpoint """
     return {"Hello": "World"}
 
 @app.post("/new_user")
-async def create_user(user: User, response: Response):
+async def create_user(user: User,response: Response, db: Session = Depends(db)) :
     """ create new user """
     user_schema = UserSchema(**user.dict())
+    db.add(user_schema)
+    db.commit()
     response.status_code = 201
     return {"message": "User created successfully"}
 
